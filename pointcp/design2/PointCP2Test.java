@@ -6,23 +6,23 @@ public class PointCP2Test {
     public static void main(String[] args) {
         PointCP2 point;
 
-        System.out.println("(Desgin 2) Cartesian-Polar Coordinates Conversion Program");
+        System.out.println("(Polar Coordinates Only) Cartesian-Polar Coordinates Conversion Program");
 
         try {
             point = new PointCP2(
-                Double.valueOf(args[0]).doubleValue(),
-                Double.valueOf(args[1]).doubleValue()
-            );
+                args[0].toUpperCase().charAt(0),
+                Double.valueOf(args[1]).doubleValue(),
+                Double.valueOf(args[2]).doubleValue());
         }
-        catch (Exception e) {
-            if (args.length != 0) {
+        catch(Exception e) {
+            if (args.length != 0) { 
                 System.out.println("Invalid arguments on command line");
             }
 
             try {
                 point = getInput();
             }
-            catch (IOException ex) {
+            catch (IOException ioe) {
                 System.out.println("Error getting input. Ending program.");
                 return;
             }
@@ -37,17 +37,23 @@ public class PointCP2Test {
 
     private static PointCP2 getInput() throws IOException {
         byte[] buffer = new byte[1024];
-        boolean isOk = false;
+        boolean isOK = false;
         String theInput = "";
 
+        char coordType = 'A';
         double a = 0.0;
         double b = 0.0;
 
-        for (int i = 0; i < 2; i++) {
-            while (!isOk) {
-                isOk = true;
+        for (int i = 0; i < 3; i++) {
+            while (!isOK) {
+                isOK = true;
 
-                System.out.print("Enter the value of " + (i == 0 ? "Rho" : "Theta") + " using a decimal point(.): ");
+                if (i == 0) {
+                    System.out.print("Enter the type of Coordinates you are inputting ((C)artesian / (P)olar): ");
+                }
+                else {
+                    System.out.print("Enter the value of " + (coordType == 'C' ? (i == 1 ? "X " : "Y ") : (i == 1 ? "Rho " : "Theta ")) + "using a decimal point(.): ");
+                }
 
                 for (int k = 0; k < 1024; k++) {
                     buffer[k] = '\u0020';
@@ -58,21 +64,30 @@ public class PointCP2Test {
 
                 try {
                     if (i == 0) {
-                        a = Double.valueOf(theInput).doubleValue();
+                        if (!((theInput.toUpperCase().charAt(0) == 'C') || (theInput.toUpperCase().charAt(0) == 'P'))) {
+                            isOK = false;
+                        }
+                        else {
+                            coordType = theInput.toUpperCase().charAt(0);
+                        }
                     }
                     else {
-                        b = Double.valueOf(theInput).doubleValue();
+                        if (i == 1) {
+                            a = Double.valueOf(theInput).doubleValue();
+                        }
+                        else {
+                            b = Double.valueOf(theInput).doubleValue();
+                        }
                     }
                 }
                 catch (Exception e) {
                     System.out.println("Incorrect input");
-                    isOk = false;
+                    isOK = false;
                 }
             }
-
-            isOk = false;
+            isOK = false;
         }
 
-        return (new PointCP2(a, b));
+        return new PointCP2(coordType, a, b);
     }
 }
