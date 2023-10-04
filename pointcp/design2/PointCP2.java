@@ -70,6 +70,6 @@ public class PointCP2 {
     }
 
     public String toString() {
-        return "Stored as " + (typeCoord == 'C' ? "Cartesian  (" + getX() + ", " + getY() + ")" : "Polar [" + getRho() + ", " + getTheta() + "]") + "\n";
+        return "Stored as " + (typeCoord == 'C' ? "Cartesian (" + getX() + ", " + getY() + ")" : "Polar [" + getRho() + ", " + getTheta() + "]") + "\n";
     }
 }
