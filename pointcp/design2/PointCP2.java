@@ -9,10 +9,10 @@ public class PointCP2 {
     private double rho;
     private double theta;
 
-    public PointCP2(double rho, double theta) {
+    public PointCP2(char typeCoord, double rho, double theta) {
         this.rho = rho;
         this.theta = theta;
-        typeCoord = 'P';
+        this.typeCoord = typeCoord;
     }
 
     public double getX() {
@@ -63,7 +63,7 @@ public class PointCP2 {
         double X = getX();
         double Y = getY();
     
-        return new PointCP2(
+        return new PointCP2('P',
           (Math.cos(radRotation) * X) - (Math.sin(radRotation) * Y),
           (Math.sin(radRotation) * X) + (Math.cos(radRotation) * Y)
         );

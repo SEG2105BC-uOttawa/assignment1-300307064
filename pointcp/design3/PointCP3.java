@@ -9,10 +9,10 @@ public class PointCP3 {
     private double x;
     private double y;
 
-    public PointCP3(double x, double y) {
+    public PointCP3(char typeCoord, double x, double y) {
         this.x = x;
         this.y = y;
-        typeCoord = 'C';
+        this.typeCoord = typeCoord;
     }
 
     public double getX() {
@@ -63,7 +63,7 @@ public class PointCP3 {
         double X = getX();
         double Y = getY();
     
-        return new PointCP3(
+        return new PointCP3('C',
           (Math.cos(radRotation) * X) - (Math.sin(radRotation) * Y),
           (Math.sin(radRotation) * X) + (Math.cos(radRotation) * Y)
         );

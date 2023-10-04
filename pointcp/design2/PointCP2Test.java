@@ -9,7 +9,7 @@ public class PointCP2Test {
         System.out.println("(Desgin 2) Cartesian-Polar Coordinates Conversion Program");
 
         try {
-            point = new PointCP2(
+            point = new PointCP2('P',
                 Double.valueOf(args[0]).doubleValue(),
                 Double.valueOf(args[1]).doubleValue()
             );
@@ -73,6 +73,6 @@ public class PointCP2Test {
             isOk = false;
         }
 
-        return (new PointCP2(a, b));
+        return (new PointCP2('P', a, b));
     }
 }
