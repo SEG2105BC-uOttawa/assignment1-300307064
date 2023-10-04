@@ -10,6 +10,8 @@ public class PointCP2 {
     private double theta;
 
     public PointCP2(char typeCoord, double rho, double theta) {
+        if (typeCoord != 'C' || typeCoord != 'P') throw new IllegalArgumentException();
+        
         this.rho = rho;
         this.theta = theta;
         this.typeCoord = typeCoord;

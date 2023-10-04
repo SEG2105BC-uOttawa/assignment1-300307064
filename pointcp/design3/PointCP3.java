@@ -10,6 +10,8 @@ public class PointCP3 {
     private double y;
 
     public PointCP3(char typeCoord, double x, double y) {
+        if (typeCoord != 'C' || typeCoord != 'P') throw new IllegalArgumentException();
+        
         this.x = x;
         this.y = y;
         this.typeCoord = typeCoord;
