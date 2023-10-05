@@ -1,14 +1,62 @@
 package design2;
 
-import design5.PointCP5;
+public class PointCP2 {
+    private double xOrRho, yOrTheta;
+    private char typeCoord;
 
-/**
- * Polar coordinates
- */
+    public PointCP2(char typeCoord, double xOrRho, double yOrTheta) {
+        if (typeCoord != 'C' && typeCoord != 'P') throw new IllegalArgumentException();
 
-public class PointCP2 extends PointCP5 {
-    public PointCP2(char typeCoord, double rho, double theta) {
-        super(typeCoord, rho, theta);
+        this.xOrRho = xOrRho;
+        this.yOrTheta = yOrTheta;
+        this.typeCoord = typeCoord;
+    }
+
+    public char getTypeCoord() {
+        return typeCoord;
+    }
+
+    public double getX() {
+        return (typeCoord == 'C') ? xOrRho : (Math.cos(Math.toRadians(yOrTheta)) * xOrRho);
+    }
+    
+    public double getY() {
+        return (typeCoord == 'C') ? yOrTheta : (Math.sin(Math.toRadians(yOrTheta)) * xOrRho);
+    }
+    
+    public double getRho() {
+        return (typeCoord == 'P') ? xOrRho : (Math.sqrt(Math.pow(xOrRho, 2) + Math.pow(yOrTheta, 2)));
+    }
+    
+    public double getTheta() {
+        return (typeCoord == 'P') ? yOrTheta : (Math.toDegrees(Math.atan2(yOrTheta, xOrRho)));
+    }
+
+    public void convertStorageToCartesian() {
+        if (typeCoord != 'C') {
+            double temp = getX();
+            yOrTheta = getY();
+            xOrRho = temp;
+      
+            typeCoord = 'C';
+          }
+    }
+
+    public void convertStorageToPolar() {
+        if (typeCoord != 'P') {
+            double temp = getRho();
+            yOrTheta = getTheta();
+            xOrRho = temp;
+      
+            typeCoord = 'P';
+          }
+    }
+
+    public double getDistance(PointCP2 pointB) {
+        double deltaX = getX() - pointB.getX();
+        double deltaY = getY() - pointB.getY();
+
+        return Math.sqrt((Math.pow(deltaX, 2) + Math.pow(deltaY, 2)));
     }
 
     public PointCP2 rotatePoint(double rotation) {
@@ -26,6 +74,6 @@ public class PointCP2 extends PointCP5 {
     }
 
     public String toString() {
-        return "Stored as " + (getTypeCoord() == 'C' ? "Cartesian (" + getX() + ", " + getY() + ")" : "Polar [" + getRho() + ", " + getTheta() + "]") + "\n";
+        return "Stored as " + (typeCoord == 'C' ? "Cartesian (" + getX() + ", " + getY() + ")" : "Polar [" + getRho() + ", " + getTheta() + "]") + "\n";
     }
 }
